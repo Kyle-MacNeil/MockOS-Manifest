@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest>
+    <!-- Remote repository definitions -->
+    <remote name="vendor-public" fetch="https://github.com/VENDOR_ORG"/>
+    <remote name="internal-server" fetch="ssh://git@gitlab.yourdomain.com/"/>
+    <remote name="community-public" fetch="https://github.com/COMMUNITY_ORG"/>
+
+    <!-- Default sync behavior (threads) -->
+    <default sync-j="4"/>
+
+    <!-- Vendor / BSP Projects -->
+    <project remote="vendor-public" revision="YOUR_RELEASE_TAG" name="vendor-scripts" path="sources/vendor-scripts"/>
+    <project remote="vendor-public" revision="YOUR_RELEASE_TAG" name="vendor-manifests" path="sources/manifest"/>
+    <project remote="vendor-public" revision="YOUR_RELEASE_TAG" name="meta-vendor-bsp" path="sources/meta-vendor-bsp" sync-s="true"/>
+    <project remote="vendor-public" revision="YOUR_RELEASE_TAG" name="meta-vendor-tools" path="sources/meta-vendor-tools"/>
+
+    <!-- Core Yocto / OpenEmbedded Projects -->
+    <project remote="vendor-public" revision="YOUR_RELEASE_TAG" name="poky" path="sources/poky"/>
+    <project remote="vendor-public" revision="YOUR_RELEASE_TAG" name="meta-openembedded" path="sources/meta-openembedded"/>
+    <project remote="vendor-public" revision="YOUR_RELEASE_TAG" name="meta-virtualization" path="sources/meta-virtualization"/>
+    <project remote="vendor-public" revision="YOUR_RELEASE_TAG" name="meta-security" path="sources/meta-security"/>
+    <project remote="vendor-public" revision="YOUR_RELEASE_TAG" name="meta-qt5" path="sources/meta-qt5"/>
+
+    <!-- Specialized/Community Projects -->
+    <project remote="community-public" revision="BRANCH_OR_TAG" name="meta-community-project" path="sources/meta-community-project"/>
+
+    <!-- Internal / Custom Projects -->
+    <!-- Upstream attribute helps track the branch you intend to merge against -->
+    <project remote="internal-server" revision="main" upstream="refs/heads/main" name="group/repo/meta-custom-layer" path="sources/meta-custom-layer">
+        <!-- Copy a setup or init script from the repository into the root sync directory -->
+        <copyfile dest="setupsdk" src="tools/setupsdk"/>
+		<copyfile dest="run.yocto.sh" src="tools/Docker/run.yocto.sh"/>
+    </project>
+</manifest>
